@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased text-gray-900 bg-gray-50;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-700 
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 
+           transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 
+           focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 
+           transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+  }
+  
+  .card-hover {
+    @apply card hover:shadow-lg transition-shadow duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+           focus:ring-primary-500 focus:border-transparent outline-none 
+           transition-colors duration-200;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-primary-600 border-t-transparent;
+  }
+  
+  .price-up {
+    @apply text-stock-green;
+  }
+  
+  .price-down {
+    @apply text-stock-red;
+  }
+  
+  .price-neutral {
+    @apply text-gray-500;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Stock specific styles */
+.stock-card {
+  @apply card-hover relative overflow-hidden;
+}
+
+.stock-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary-50 to-blue-50 opacity-0 
+         transition-opacity duration-200;
+}
+
+.stock-card:hover::before {
+  @apply opacity-100;
+}
+
+.stock-trend-up {
+  @apply price-up;
+}
+
+.stock-trend-down {
+  @apply price-down;
+}
+
+.stock-change-indicator {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+.stock-change-positive {
+  @apply stock-change-indicator bg-green-100 text-green-800;
+}
+
+.stock-change-negative {
+  @apply stock-change-indicator bg-red-100 text-red-800;
+}
+
+/* Navigation styles */
+.nav-link {
+  @apply inline-flex items-center px-3 py-2 text-sm font-medium rounded-md 
+         transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply nav-link text-primary-600 bg-primary-50;
+}
+
+.nav-link-inactive {
+  @apply nav-link text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+}
+
+/* Responsive design helpers */
+@media (max-width: 640px) {
+  .mobile-stack {
+    @apply flex flex-col space-y-2;
+  }
+  
+  .mobile-full {
+    @apply w-full;
+  }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Loading skeletons */
+.skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
+
+.skeleton-text {
+  @apply skeleton h-4;
+}
+
+.skeleton-circle {
+  @apply skeleton rounded-full;
+}
