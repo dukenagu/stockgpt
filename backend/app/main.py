@@ -50,12 +50,15 @@ async def root():
 async def get_stock_info(symbol: str):
     """Get detailed stock information"""
     # Check cache first
+    print("Stock input: ", symbol)
     cache_key = f"overview_{symbol}"
     cached_data = cache_service.get(cache_key)
+    print("Stock: ", cached_data)
     if cached_data:
         return cached_data
     
     stock_data = await stock_service.get_stock_overview(symbol)
+    print("Stock Data: ", stock_data)
     if not stock_data:
         raise HTTPException(status_code=404, detail=f"Stock information not found for symbol: {symbol}")
     
