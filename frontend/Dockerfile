@@ -6,14 +6,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies (including dev dependencies for build)
-RUN npm ci
+# Install dependencies
+RUN npm install
 
 # Copy source code
 COPY . .
 
-# Build Tailwind CSS and React app
-RUN npm run build:tailwind && npm run build
+# Build Tailwind CSS
+RUN npm run build:tailwind
+
+# Build the React app
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
