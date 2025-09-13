@@ -24,13 +24,13 @@ class StockService:
                 "symbol": symbol.upper(),
                 "apikey": self.alpha_vantage_key
             }
-            print("Param value: ", params)
+            
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.get(self.base_url, params=params)
                 response.raise_for_status()
                 data = response.json()
 
-                print("Data : ", data)
+              
 
                 if not data or "Symbol" not in data:
                     return None

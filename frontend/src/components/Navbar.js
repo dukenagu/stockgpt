@@ -15,8 +15,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <ChartBarIcon className="h-8 w-8 text-indigo-600" />
-            <span className="ml-2 text-xl font-bold text-gray-900">StockGPT</span>
+            <ChartBarIcon className="h-8 w-8 text-indigo-600" />            
+            <Link key='Home' to='/'>
+                <span className="ml-2 text-xl font-bold text-gray-900"> Naga's StockGPT</span>
+            </Link>
           </div>
           
           <div className="flex space-x-8">

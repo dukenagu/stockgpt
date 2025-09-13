@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import StockDetail from './pages/StockDetail';
 import Search from './pages/Search';
+import StockGPT from './pages/stockgpt';
 import './styles/App.css';
 import './styles/Index.css';
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/stock/:symbol" element={<StockDetail />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/stockGPT" element={<StockGPT />} />
           </Routes>
         </main>
       </div>

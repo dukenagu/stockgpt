@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { stockAPI } from '../services/api';
-import { ArrowTrendingUpIcon, ChartBarIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { ArrowTrendingUpIcon, ChartBarIcon, ChatBubbleOvalLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const Home = () => {
   const [popularStocks, setPopularStocks] = useState(['AAPL', 'GOOGL', 'MSFT', 'TSLA', 'AMZN']);
@@ -51,8 +51,15 @@ const Home = () => {
         <p className="text-xl text-gray-600 mb-8">
           Real-time stock data, analytics, and insights powered by AI
         </p>
-        
+            
         <div className="flex justify-center space-x-4">
+          <Link
+            to="/stockGPT"
+            className="btn-primary"
+          >
+            <ChatBubbleOvalLeftIcon className="h-5 w-5 inline mr-2" />
+            StockGPT
+          </Link>
           <Link
             to="/search"
             className="btn-primary"

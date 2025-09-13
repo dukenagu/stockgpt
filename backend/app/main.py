@@ -1,12 +1,26 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Optional, Dict
+from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel
+from typing import Optional, List, Dict, Any, Generator
+import yfinance as yf
+import openai
 import os
 from dotenv import load_dotenv
+import asyncio
+import aiohttp
+import json
+import httpx
+from datetime import datetime, timedelta
+import logging
 
 from .services import stock_service, cache_service
 from .models import StockOverview, StockQuote, StockSearchResponse, APIResponse, ErrorResponse
 from .schemas import HealthResponse
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -19,11 +33,18 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
+MCP_SERVER_URL = os.getenv('MCP_SERVER_URL', 'http://localhost:8080')
+MCP_API_KEY = os.getenv('MCP_API_KEY')
+
+
+
 
 # Alpha Vantage API key
 ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY", "demo")
@@ -50,15 +71,15 @@ async def root():
 async def get_stock_info(symbol: str):
     """Get detailed stock information"""
     # Check cache first
-    print("Stock input: ", symbol)
+
     cache_key = f"overview_{symbol}"
     cached_data = cache_service.get(cache_key)
-    print("Stock: ", cached_data)
+
     if cached_data:
         return cached_data
     
     stock_data = await stock_service.get_stock_overview(symbol)
-    print("Stock Data: ", stock_data)
+
     if not stock_data:
         raise HTTPException(status_code=404, detail=f"Stock information not found for symbol: {symbol}")
     
